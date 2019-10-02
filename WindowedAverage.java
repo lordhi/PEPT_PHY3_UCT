@@ -37,14 +37,17 @@ public class WindowedAverage
 
 				data[point][i+4] += coefficient[j]*posDifference/timeDifference;
 				
-				//	Uncertainty on position as a fraction of the position difference, squared
+				/*	Uncertainty propagation calculation, Tom said to use 10%
+
+					//Uncertainty on position as a fraction of the position difference, squared
 				data[point][i+7] += (Math.pow(data[point+j][4],2) 
 					+ Math.pow(data[point+j-5][4],2))/Math.pow(posDifference,2);
-				/*	Uncertainty on time as a fraction of the time difference, squared
-					Uncertainty on an individual time measurement was taken to be 0.5ms*/
-				data[point][i+7] += 1/2*Math.pow(timeDifference,2);
+					//Uncertainty on time as a fraction of the time difference, squared
+					//Uncertainty on an individual time measurement was taken to be 0.5ms
+				data[point][i+7] += 1/2*Math.pow(timeDifference,2);*/
 			}
-			data[point][i+7] = Math.abs(data[point][i+4])*Math.sqrt(data[point][i+7]);
+			//data[point][i+7] = Math.abs(data[point][i+4])*Math.sqrt(data[point][i+7]);
+			data[point][i+7] = Math.abs(data[point][i+4])*0.1;
 		}
 	}
 
