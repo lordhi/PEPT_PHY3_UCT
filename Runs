@@ -1,0 +1,58 @@
+High speed- 3 rev/s
+Medium speed- 2 rev/s
+Low speed- 1 rev/s
+
+F- Full 5mm beads by mass
+Q- Quarter 10mm beads by mass
+T- Third 10mm beads by mass
+H- Half 10mm beads by mass
+
+5- 5mm tracer used
+10- 10mm tracer used
+
+Week 1:
+	Nfront
+	Nfront1
+	Sfront
+	Efront
+	Wfront
+	Nfack
+	Sback
+	Eback
+	Wback
+	Hspeed1
+	HTrace
+
+Week 2:
+	Cal2
+	Fopt
+	q_hig_5
+	q_med_5
+	t_med_5
+	t_low_5
+	h_med_5
+	h_low_5 run for 1 minute due to error
+	h_low_51 run for 10 minutes
+	f_low_5
+	q_hig_10
+	
+	q_med_10
+	t_hig_10
+	t_med_10
+	h_hig_10
+	h_med_10
+Week 3:
+	HSpeed
+	MSpeed
+	LSpeed
+	f_hig_5
+	f_med_5
+	f_low_51
+	h_hig_5
+	t_hig_5
+	q_low_5
+
+	q_low_10
+	t_low_10
+	h_low_10
+	cal_10
