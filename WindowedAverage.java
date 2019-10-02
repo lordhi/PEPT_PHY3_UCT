@@ -96,24 +96,14 @@ public class WindowedAverage
 
 		return data;
 	}
-
 	public static int getLength(String filename)
 	throws Exception
 	{
-		Runtime rt = Runtime.getRuntime();
-		Process process = rt.exec("wc -l " + filename);
-		process.waitFor();
-
-		BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-		
-		String line = null;
-		String otherline = null;
-		while ((line = reader.readLine()) != null)
-			otherline = line;
+		BufferedReader reader = new BufferedReader(new FileReader(filename));
+		int lines = 0;
+		while (reader.readLine() != null) lines++;
 		reader.close();
 
-		otherline = otherline.split(" ")[0];
-		int length = Integer.parseInt(otherline);
-		return length+1;
+		return lines;
 	}
 }
