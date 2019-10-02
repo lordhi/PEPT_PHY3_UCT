@@ -1,17 +1,22 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
 import java.io.BufferedInputStream;
 import java.io.InputStreamReader;
 import java.lang.Runtime;
 
 public class WindowedAverage
 {
-	static double coefficients[] = {0.1, 0.15, 0.25, 0.25, 0.15, 0.1};
+	static double coefficient[] = {0.1, 0.15, 0.25, 0.25, 0.15, 0.1};
 	
 	public static void main(String args[])
 	{
 		try{
 			double data[][] = readFile("../Data/h_hig_5.a");
+			for (int i=5; i<data.length-5; i++)
+				insertVelocity(data, i);
+			writeFile(data, "../Data/h_hig_5.b");
 		}catch(Exception e){
 			e.printStackTrace();
 			System.exit(0);
@@ -19,16 +24,48 @@ public class WindowedAverage
 	}
 
 	public static void insertVelocity(double data[][], int point)
+	throws Exception
 	{
-		double uvelocity;
-		for (int i=1; i<4; i+=2)
+		double posDifference;
+		double timeDifference;
+		for (int i=1; i<4; i+=1)
 		{
 			for(int j=0; j<=5; j++)
 			{
-				data[point][i+3] += coefficients[j]*((data[point+j][i]-data[point+j-5][i])/(data[point+j][0]-data[point+j-5][0]));
+				posDifference = (data[point+j][i]-data[point+j-5][i]);
+				timeDifference = (data[point+j][0]-data[point+j-5][0]);
+
+				data[point][i+4] += coefficient[j]*posDifference/timeDifference;
+				
+				//	Uncertainty on position as a fraction of the position difference, squared
+				data[point][i+7] += (Math.pow(data[point+j][4],2) 
+					+ Math.pow(data[point+j-5][4],2))/Math.pow(posDifference,2);
+				/*	Uncertainty on time as a fraction of the time difference, squared
+					Uncertainty on an individual time measurement was taken to be 0.5ms*/
+				data[point][i+7] += 1/2*Math.pow(timeDifference,2);
 			}
-        	
+			data[point][i+7] = Math.abs(data[point][i+4])*Math.sqrt(data[point][i+7]);
 		}
+	}
+
+	public static void writeFile(double data[][], String filename)
+	throws Exception
+	{
+		FileWriter fw = new FileWriter(filename);
+		BufferedWriter bw = new BufferedWriter(fw);
+		bw.write("t\tx\ty\tz\tu(r)\tvx\tvy\tvz\tu(vx)\tu(vy)\tu(vz)\r\n");
+		StringBuilder tmp;
+		for (int i=0; i<data.length; i++)
+		{
+			tmp = new StringBuilder(50);
+			for (int j=0; j<11; j++)
+			{
+				tmp.append(data[i][j] + "\t");
+			}
+			bw.write(tmp.toString() + "\r\n");
+		}
+		bw.close();
+		fw.close();
 	}
 
 	public static double[][] readFile(String filename)
@@ -51,7 +88,6 @@ public class WindowedAverage
 			for(int j=0; j<5;j++)
 			{
 				data[i][j] = Double.parseDouble(tmp[j]);
-				System.out.println(data[i][j]);
 			}
 		}
 
