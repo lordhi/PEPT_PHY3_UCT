@@ -40,5 +40,6 @@ def plotVelocities(x,y,vx,vy, gridsize=100):
 	plt.quiver(x,y, xdata, ydata, headwidth=3, headlength=2, headaxislength=1.5)
 	plt.show()
 
-__,x,y,__,__,vx,vy,__,__,__,__ = read_file("../Data/q_hig_10")
-plotVelocities(x,y,vx,vy, gridsize=50)
+if __name__ == '__main__':
+	__,x,y,__,__,vx,vy,__,__,__,__ = read_file("../Data/q_hig_10")
+	plotVelocities(x,y,vx,vy, gridsize=50)
