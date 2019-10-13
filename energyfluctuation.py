@@ -36,6 +36,33 @@ def twoD_binned_energy_fluctuations(x,y,z,vx,vy,vz, zmin, zstep, xmin, xstep):
 				binnedData[a][b][1].append(val[4])
 				binnedData[a][b][2].append(val[5])
 
+	i = len(binnedData)-1
+	while i > 0:
+		flag = True
+		for j in range(len(binnedData[i])):
+			if binnedData[i][j] != [[],[],[]]:
+				flag = False
+		if flag:
+			del binnedData[i]
+			del zbins[-1]
+		else:
+			break
+		i -= 1
+
+	i = len(binnedData[0])-1
+	while i > 0:
+		flag = True
+		for j in range(len(binnedData)):
+			if binnedData[j][i] != [[],[],[]]:
+				flag = False
+		if flag:
+			for j in range(len(binnedData)):
+				del binnedData[j][-1]
+			del xbins[-1]
+		else:
+			break
+		i -= 1
+
 	x_variances = []
 	y_variances = []
 	z_variances = []
@@ -110,7 +137,7 @@ def plot_variances(filename):
 	zbins, xbins, x_variances, y_variances, z_variances = twoD_binned_energy_fluctuations(x,y,z,vx,vy,vz,min(z),1, min(x),1)
 
 	plt.figure()
-	plt.contour(xbins, zbins,x_variances)
+	plt.contourf(xbins, zbins,x_variances)
 	plt.colorbar()
 	plt.xlim(xbins[0], xbins[-1])
 	plt.ylim(zbins[0], zbins[-1])
