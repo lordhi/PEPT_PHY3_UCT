@@ -25,10 +25,6 @@ def twoD_binned_energy_fluctuations(x,y,z,vx,vy,vz, zmin, zstep, xmin, xstep):
 		for j in range(len(xbins)):
 			binnedData[i].append([[],[],[]])
 
-	for i in range(len(binnedData)):
-		for j in range(len(binnedData[i])):
-			binnedData[i][j].append([])
-
 	for i in range(len(data)):
 		a = int((data[i][2] - zmin)/zstep)
 		b = int((data[i][0] - xmin)/xstep)
