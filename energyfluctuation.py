@@ -19,9 +19,6 @@ def twoD_binned_energy_fluctuations(x,y,z,vx,vy,vz, zmin, zstep, xmin, xstep):
 	while (xbins[-1] < xmax):
 		xbins.append(xbins[-1] + xstep)
 
-	zbins = np.asarray(zbins)
-	xbins = np.asarray(xbins)
-
 	binnedData = []
 	for i in range(len(zbins)):
 		binnedData.append([])
@@ -34,7 +31,7 @@ def twoD_binned_energy_fluctuations(x,y,z,vx,vy,vz, zmin, zstep, xmin, xstep):
 
 	for i in range(len(data)):
 		a = int((data[i][2] - zmin)/zstep)
-		b = int((data[i][2] - xmin)/xstep)
+		b = int((data[i][0] - xmin)/xstep)
 
 		if a >= 0 and a < zbins[-1]:
 			if b >= 0 and b < xbins[-1]:
@@ -124,4 +121,4 @@ def plot_variances(filename):
 	plt.show()
 
 if __name__ == '__main__':
-	plot_variances("../Data/h_hig_10")
+	plot_variances("../Data/h_hig_5")
